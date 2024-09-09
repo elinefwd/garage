@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-Customer createCustomer(Customer customer);
-    Customer getCustomerById(int customerId);
-    Customer updateCustomer(Customer customer);
-    void deleteCustomer(int customerId);
+    // Method to find a customer by its customer Id
+    Customer findByCustomerId(Long customerId); // Find customer by Id
+    // Method to delete a customer by its customer Id
+    void deleteByCustomerId(Long customerId); // Delete customer by Id
 }
+

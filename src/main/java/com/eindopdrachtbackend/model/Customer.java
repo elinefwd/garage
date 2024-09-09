@@ -1,15 +1,16 @@
 package com.eindopdrachtbackend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customerId; // Using Long instead of int for better database compatibility
+    private Long customerId; // This is your primary key
+
     private String name;
     private String address;
     private String phoneNumber;
@@ -29,7 +30,7 @@ public class Customer {
     }
 
     public void setName(String name) {
-        this.name = name; // Make sure this method exists
+        this.name = name;
     }
 
     public String getAddress() {
