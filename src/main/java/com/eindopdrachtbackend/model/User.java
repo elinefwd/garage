@@ -1,15 +1,18 @@
 package com.eindopdrachtbackend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "application_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userID; // Use Long for better database compatibility
+    private Long userId; // Changed from userID to userId for consistency
+
     private String username;
     private String password;
     private String role;
@@ -19,12 +22,12 @@ public class User {
     }
 
     // Getters and Setters
-    public Long getUserID() {
-        return userID;
+    public Long getUserId() { // Changed from getUserID to getUserId
+        return userId;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUserId(Long userId) { // Changed from setUserID to setUserId
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -32,7 +35,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username; // Make sure this method exists
+        this.username = username;
     }
 
     public String getPassword() {
