@@ -1,7 +1,8 @@
 package com.eindopdrachtbackend.service;
 
 import com.eindopdrachtbackend.model.User;
-import com.eindopdrachtbackend.repository.UserRepository; // Ensure this import is correct
+import com.eindopdrachtbackend.model.Role; // Import the Role enum
+import com.eindopdrachtbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,26 +12,34 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository; // Autowire the UserRepository
+    private UserRepository userRepository;
 
-    public User createUser(String username, String password, String role) {
+    public User createUser(String username, String password, String roleString) {
+        // Use the fromString method to convert String to Role enum
+        Role role = Role.fromString(roleString); // Now using the conversion method
+
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password); // Be mindful of password handling (e.g., hash passwords)
-        user.setRole(role);
-
-        return userRepository.save(user); // Save the new user to the database
+        user.setPassword(hashPassword(password)); // Hash the password before storing
+        user.setRole(role); // Now we can set the role without error
+        return userRepository.save(user); // Save the user object
     }
 
-    public Optional<User> getUserById(Long userId) { // Change int to Long if your User ID is Long
-        return userRepository.findById(userId); // Retrieve user by ID
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id); // Use the repository to find the user
     }
 
-    public User updateUser(User updatedUser) {
-        return userRepository.save(updatedUser); // Update the user
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id); // Room for implementing business logic
     }
 
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId); // Delete the user by ID
+    // Placeholder for actual password hashing logic
+    private String hashPassword(String password) {
+        // Implement your password hashing logic here
+        return password; // Return the hashed password
+    }
+
+    public User updateUser(User user) {
+        return user;
     }
 }

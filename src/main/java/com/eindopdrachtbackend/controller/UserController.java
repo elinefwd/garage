@@ -15,12 +15,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Create a new user
+    // Create a new user (admin or employee)
     @PostMapping
     public User createUser(@RequestBody User user) {
-        return userService.createUser(user.getUsername(), user.getPassword(), user.getRole()); // Pass parameters separately
+        return userService.createUser(user.getUsername(), user.getPassword(), user.getRole()); // Assuming role is an attribute
     }
-
 
     // Get user by ID
     @GetMapping("/{id}")

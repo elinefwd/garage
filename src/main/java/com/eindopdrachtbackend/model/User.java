@@ -9,24 +9,25 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "application_user")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId; // Changed from userID to userId for consistency
+    private Long userId;
 
     private String username;
-    private String password;
-    private String role;
+    private String password; // Should be hashed before storing
+    private Role role; // Use the Role enum instead of String
 
     // Default constructor
     public User() {
     }
 
     // Getters and Setters
-    public Long getUserId() { // Changed from getUserID to getUserId
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) { // Changed from setUserID to setUserId
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -39,7 +40,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return password; // Consider omitting this getter for security
     }
 
     public void setPassword(String password) {
@@ -50,7 +51,7 @@ public class User {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }
