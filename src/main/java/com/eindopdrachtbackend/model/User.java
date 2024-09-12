@@ -22,6 +22,13 @@ public class User {
     public User() {
     }
 
+    // Parameterized constructor
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role; // Assign the Role enum
+    }
+
     // Getters and Setters
     public Long getUserId() {
         return userId;
@@ -47,11 +54,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public Role getRole() { // Change return type to Role
+        return role; // Return the Role enum directly
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        this.role = role; // This setter should accept a Role type
     }
 }

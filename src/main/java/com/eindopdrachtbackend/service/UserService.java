@@ -14,16 +14,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createUser(String username, String password, String roleString) {
-        // Use the fromString method to convert String to Role enum
-        Role role = Role.fromString(roleString); // Now using the conversion method
-
+    public User createUser(String username, String password, Role role) { // Change the third parameter to Role
         User user = new User();
         user.setUsername(username);
         user.setPassword(hashPassword(password)); // Hash the password before storing
-        user.setRole(role); // Now we can set the role without error
+        user.setRole(role); // Set the role directly as Role
         return userRepository.save(user); // Save the user object
     }
+
 
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id); // Use the repository to find the user
@@ -40,6 +38,10 @@ public class UserService {
     }
 
     public User updateUser(User user) {
+        return user;
+    }
+
+    public User createUser(User user) {
         return user;
     }
 }
