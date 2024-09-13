@@ -9,24 +9,32 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "application_user")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId; // Changed from userID to userId for consistency
+    private Long userId;
 
     private String username;
-    private String password;
-    private String role;
+    private String password; // Should be hashed before storing
+    private Role role; // Use the Role enum instead of String
 
     // Default constructor
     public User() {
     }
 
+    // Parameterized constructor
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role; // Assign the Role enum
+    }
+
     // Getters and Setters
-    public Long getUserId() { // Changed from getUserID to getUserId
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) { // Changed from setUserID to setUserId
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -39,18 +47,18 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return password; // Consider omitting this getter for security
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public Role getRole() { // Change return type to Role
+        return role; // Return the Role enum directly
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(Role role) {
+        this.role = role; // This setter should accept a Role type
     }
 }

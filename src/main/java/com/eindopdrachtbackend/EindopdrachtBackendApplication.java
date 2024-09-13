@@ -12,5 +12,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 public class EindopdrachtBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(EindopdrachtBackendApplication.class, args);
+
     }
 }
