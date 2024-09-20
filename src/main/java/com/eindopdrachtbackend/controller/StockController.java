@@ -3,24 +3,31 @@ package com.eindopdrachtbackend.controller;
 import com.eindopdrachtbackend.model.Stock;
 import com.eindopdrachtbackend.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.eindopdrachtbackend.service.StockService;
+
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/stock") // Base URL for stock-related APIs
+@RequestMapping("/api/stock") // Ensure this matches your test setup
 public class StockController {
 
     @Autowired
     private StockService stockService;
 
-    // Create a new stock item
     @PostMapping
-    public Stock createStock(@RequestBody Stock stock) {
-        return stockService.createStock(stock);
+    public ResponseEntity<Stock> createStock(@RequestBody Stock stock) {
+        Stock createdStock = stockService.createStock(stock);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdStock);
     }
+
+    // Other methods remain unchanged
+
+
 
     // Get all stock items
     @GetMapping
