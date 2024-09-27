@@ -35,5 +35,5 @@ Common issues and solutions can be found by asking AI.
 Details for getting additional help or reporting issues: email me on elinefwd@gmail.com
 
 ## License
-NOVI backend all rights reserved 2024.
+All rights reserved 2024.
 

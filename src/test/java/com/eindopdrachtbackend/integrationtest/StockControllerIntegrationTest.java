@@ -1,20 +1,26 @@
 package com.eindopdrachtbackend.integrationtest;
 
+import org.junit.jupiter.api.Test; // For @Test annotation
+
 import com.eindopdrachtbackend.model.Stock;
 import com.eindopdrachtbackend.service.StockService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,6 +34,7 @@ class StockControllerIntegrationTest {
 
     // Test 1: Verifying GET endpoint for a Stock by ID
     @Test
+    @WithMockUser // This simulates a logged-in user
     void testGetStockById() throws Exception {
         Stock stock = new Stock();
         stock.setId(1L);
@@ -46,6 +53,7 @@ class StockControllerIntegrationTest {
 
     // Test 2: Verifying POST endpoint for creating a Stock
     @Test
+    @WithMockUser // This simulates a logged-in user
     void testCreateStock() throws Exception {
         Stock stock = new Stock();
         stock.setId(2L);
@@ -65,4 +73,7 @@ class StockControllerIntegrationTest {
                 .andExpect(jsonPath("$.quantity").value(5))
                 .andExpect(jsonPath("$.price").value(299.99));
     }
+
+    // Optionally: Add more tests for error scenarios
+    // For example: Handling stock not found, bad requests, etc.
 }
