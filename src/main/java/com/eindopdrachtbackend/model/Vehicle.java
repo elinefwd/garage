@@ -19,9 +19,8 @@ public class Vehicle {
     private String model;
     private int year;
     private String uploadedDocuments;
-    // Add any additional attributes as needed
+    // optional: add any additional attributes as needed
 
-    // Getters and Setters
 }
 
 
