@@ -25,9 +25,6 @@ public class StockController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStock);
     }
 
-    // Other methods remain unchanged
-
-
 
     // Get all stock items
     @GetMapping
