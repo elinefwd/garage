@@ -1,39 +1,37 @@
 # Garage
 
 ## Introduction
-The Garage Web API is designed to provide users with a solid backend for registration of customers,
-cars, parts and handlings to do as well as uploading documents that go with it for different users.
-This manual will guide you through setting up and running the API successfully.
+The Garage Web API is developed to offer a robust backend solution for the registration of customers, vehicles, parts, and associated handling operations, including document uploads for various user roles. This manual serves as a comprehensive guide for the successful setup and operation of the API.
 
 ## System Requirements
-You can use Intellij IDEA working with Maven and Springboot and then you will need to install the dependencies
-which are listed in the pom file. Also you need to have an external backend like Postgress and an admin tool 
-like PG Admin will come in handy too.
+The development environment for this application utilizes IntelliJ IDEA, along with Maven and Spring Boot. It is essential to install the necessary dependencies as specified in the POM file. Additionally, an external database system, specifically PostgreSQL, is required, along with an administrative tool such as PGAdmin for effective database management.
 
 ## Installation Instructions
-First you can clone the repository to your IDEA.
-Then you install the dependencies. (usually your IDEA will ask you to do this after you cloned it.)
-then you can just run the project using the green play button in your IDEA.
+Clone the Repository:
 
+Begin by cloning the repository into your IntelliJ IDEA workspace.
+Install Dependencies:
+
+After cloning, IntelliJ IDEA should prompt you to install the required dependencies. Follow the prompts to ensure all dependencies are properly installed.
+Run the Project:
+
+Execute the application by clicking the green play button in IntelliJ IDEA.
 Database Initialization
-The application will automatically create the PostgreSQL database schema and populate it with predefined data upon 
-startup.
-Ensure that your application.properties contains the correct PostgreSQL database connection settings. Update the 
-following properties to match your environment:
+The application is configured to automatically create the PostgreSQL database schema and populate it with predefined data upon startup.
 
+It is crucial to verify that your application.properties file contains the correct connection settings for the PostgreSQL database. Update the following properties as required for your environment:
+
+```
 spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
 spring.datasource.username=your_database_username
 spring.datasource.password=your_database_password
+```
 
-Next you may want to log in to the database as a user/ admin/ employee or customer.
-You can do that by using the name and password sent in the .env file in the project file.
+Subsequently, you may log into the database as a user, admin, employee, or customer using the credentials provided in the .env file located in the project directory.
 
-## Troubleshooting
-Common issues and solutions can be found by asking AI.
-
-## Contact Information
-Details for getting additional help or reporting issues: email me on elinefwd@gmail.com
+## Troubleshooting and Contact Information
+For further assistance or to report issues, please reach out via email at elinefwd@gmail.com.
 
 ## License
-All rights reserved 2024.
+All rights reserved, 2024.
 
