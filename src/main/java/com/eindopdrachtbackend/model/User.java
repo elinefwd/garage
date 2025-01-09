@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "application_user")
+@Table(name = "application_user") // Change the table name to avoid the reserved keyword
 public class User {
 
     @Id
@@ -15,19 +15,9 @@ public class User {
     private Long userId;
 
     private String username;
-    private String password; // Should be hashed before storing
-    private Role role; // Use the Role enum instead of String
+    private String password;
 
-    // Default constructor
-    public User() {
-    }
-
-    // Parameterized constructor
-    public User(String username, String password, Role role) {
-        this.username = username;
-        this.password = password;
-        this.role = role; // Assign the Role enum
-    }
+    private int role;  // Keep the role as int (or change to Role enum if needed)
 
     // Getters and Setters
     public Long getUserId() {
@@ -47,18 +37,18 @@ public class User {
     }
 
     public String getPassword() {
-        return password; // Consider omitting this getter for security
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public Role getRole() { // Change return type to Role
-        return role; // Return the Role enum directly
+    public int getRole() {
+        return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role; // This setter should accept a Role type
+    public void setRole(int role) {
+        this.role = role;  // Ensure this is an integer value
     }
 }

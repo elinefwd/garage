@@ -1,7 +1,7 @@
 package com.eindopdrachtbackend.controller;
 
 import com.eindopdrachtbackend.model.Document;
-import com.eindopdrachtbackend.repository.DocumentRepository;
+import com.eindopdrachtbackend.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,36 +17,37 @@ import java.io.IOException;
 public class UploadController {
 
     @Autowired
-    private DocumentRepository documentRepository;
+    private DocumentService documentService; // Gebruik van de DocumentService
 
     @PostMapping("/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        String uploadDir = "uploads"; // Directory to save the uploaded files
+        String uploadDir = "uploads"; // Directory om de geüploade bestanden op te slaan
         File dir = new File(uploadDir);
         if (!dir.exists()) {
-            dir.mkdirs(); // Create the directory if it doesn't exist
+            dir.mkdirs(); // Maak de directory aan als deze niet bestaat
         }
 
-        // Retrieve the original filename of the uploaded file
+        // Haal de originele bestandsnaam van het geüploade bestand op
         String filename = file.getOriginalFilename();
 
-        // Construct the file path where the file will be saved
+        if (filename == null || filename.isEmpty()) {
+            return ResponseEntity.badRequest().body("File name is invalid.");
+        }
+
+        // Bepaal het pad waar het bestand opgeslagen zal worden
         String filePath = uploadDir + File.separator + filename;
 
         try {
-            // Save the file locally
+            // Sla het bestand lokaal op
             file.transferTo(new File(filePath));
 
-            // Save file metadata in the database
-            Document document = new Document();
-            document.setFilename(filename);  // Use the original filename here
-            document.setFilepath(filePath);  // Save the path of the file
-            documentRepository.save(document); // Save metadata to the database
+            // Bewaar bestandsmetadata in de database
+            documentService.saveDocument(filename, filePath); // Gebruik de service hier
 
             return ResponseEntity.ok("File uploaded successfully: " + filename);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to upload file: " + e.getMessage());
         }
     }
 }
-
