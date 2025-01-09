@@ -1,5 +1,6 @@
 package com.eindopdrachtbackend.dto;
 
+import com.eindopdrachtbackend.model.Role; // Import the Role enum
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -12,8 +13,8 @@ public class UserDto {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 
-    @NotEmpty(message = "Role is required")
-    private String role; // This can remain a String while you convert it later to Role
+    // Change role from int to Role enum
+    private Role role; // Now a Role enum instead of int
 
     // Getters and Setters
     public String getUsername() {
@@ -32,11 +33,11 @@ public class UserDto {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() { // Change return type to Role
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) { // Change parameter type to Role
         this.role = role;
     }
 }

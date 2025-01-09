@@ -1,58 +1,70 @@
 package com.eindopdrachtbackend.controller;
 
-import com.eindopdrachtbackend.model.Role; // Make sure this import is present
 import com.eindopdrachtbackend.dto.UserDto;
-import com.eindopdrachtbackend.exception.Usernotfound;
 import com.eindopdrachtbackend.model.User;
 import com.eindopdrachtbackend.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
-import java.util.Optional;
+import com.eindopdrachtbackend.exception.UserNotFound;
 
 @RestController
-@RequestMapping("/users") // Base URL for user-related APIs
+@RequestMapping("/users") // Basis-URL voor gebruikersgerelateerde API's
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    // Create a new user (admin or employee)
-
-
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDto userDto) {
-        // You may want to convert userDto to User before calling userService
-        User user = new User(userDto.getUsername(), userDto.getPassword(), Role.fromString(userDto.getRole()));
-        User createdUser = userService.createUser(user); // Update this line based on your UserService method
+        // Directly use the values from UserDto to create the user
+        User createdUser = userService.createUser(
+                userDto.getUsername(),
+                userDto.getPassword(),
+                userDto.getRole() // Ensure this returns an instance of Role
+        );
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
 
-
-    // Get user by ID
+    // Haal gebruiker op bij ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new Usernotfound("User not found with id: " + id));
+                .orElseThrow(() -> new UserNotFound("User not found with id: " + id));
     }
 
 
-    // Update user details
+    @GetMapping("/username/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new UserNotFound("User not found with username: " + username));
+        return ResponseEntity.ok(user); // Return the found user
+    }
+
+
+    // Werk gebruikersdetails bij
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        user.setUserId(id); // Ensure we're using the right ID
+        user.setUserId(id); // Zorg ervoor dat we de juiste ID gebruiken
         User updatedUser = userService.updateUser(user);
         return ResponseEntity.ok(updatedUser);
     }
 
-    // Delete user by ID
+    // Verwijder gebruiker op ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build(); // Return a 204 No Content response
+        return ResponseEntity.noContent().build(); // Bevestig met een 204 No Content-respons
+    }
+
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Service is running!");
     }
 }
+

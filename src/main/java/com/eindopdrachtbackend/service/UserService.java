@@ -18,14 +18,18 @@ public class UserService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(hashPassword(password)); // Hash the password before storing
-        user.setRole(role); // Set the role directly as Role
+        user.setRole(role.getValue()); // Set the role using the integer value from the Role enum
         return userRepository.save(user); // Save the user object
     }
-
 
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id); // Use the repository to find the user
     }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username); // This relies on your UserRepository
+    }
+
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id); // Room for implementing business logic
@@ -38,10 +42,6 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        return user;
-    }
-
-    public User createUser(User user) {
-        return user;
+        return userRepository.save(user); // Ensure you save the updated user
     }
 }
