@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.Optional;
+
 @Entity
 @Table(name = "application_user") // Change the table name to avoid the reserved keyword
 public class User {
@@ -51,4 +53,6 @@ public class User {
     public void setRole(int role) {
         this.role = role;  // Ensure this is an integer value
     }
+
+
 }
