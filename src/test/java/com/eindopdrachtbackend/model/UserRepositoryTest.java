@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -23,8 +25,9 @@ public class UserRepositoryTest {
 
         userRepository.save(user);
 
-        User foundUser = userRepository.findByUsername("testUser");
-        assertThat(foundUser).isNotNull();
+        Optional<User> foundUserOptional = userRepository.findByUsername("testUser");
+        assertThat(foundUserOptional).isPresent(); // Check if the user is present
+        User foundUser = foundUserOptional.get(); // Get the user
         assertThat(foundUser.getUsername()).isEqualTo("testUser");
     }
 }

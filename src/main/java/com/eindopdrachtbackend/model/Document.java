@@ -1,17 +1,23 @@
-// src/main/java/com/eindopdrachtbackend/model/Document.java
-
 package com.eindopdrachtbackend.model;
 
 import jakarta.persistence.*;
+import com.eindopdrachtbackend.model.Customer;
 
 @Entity
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // Unique identifier for the document
 
-    private String filename;
-    private String filepath;
+    private String filename; // Original name of the uploaded file
+
+    @Lob // Indicates that this is a large object (for storing file content)
+    private byte[] fileContent; // Content of the uploaded file
+
+    @ManyToOne // This indicates a many-to-one relationship with Customer
+    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
+    private Customer customer; // Link to the associated customer
+
 
     // Getters and Setters
     public Long getId() {
@@ -30,11 +36,19 @@ public class Document {
         this.filename = filename;
     }
 
-    public String getFilepath() {
-        return filepath;
+    public byte[] getFileContent() {
+        return fileContent;
     }
 
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
+    public void setFileContent(byte[] fileContent) {
+        this.fileContent = fileContent;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

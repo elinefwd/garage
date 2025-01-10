@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.eindopdrachtbackend.exception.UserNotFound;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/users") // Basis-URL voor gebruikersgerelateerde API's
 public class UserController {
@@ -32,9 +34,12 @@ public class UserController {
     // Haal gebruiker op bij ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new UserNotFound("User not found with id: " + id));
+        Optional<User> userOptional = Optional.ofNullable(userService.getUserById(id));
+        if (userOptional.isPresent()) {
+            return ResponseEntity.ok(userOptional.get()); // Return ResponseEntity with user
+        } else {
+            throw new UserNotFound("User not found with id: " + id); // Throw exception if not found
+        }
     }
 
 
