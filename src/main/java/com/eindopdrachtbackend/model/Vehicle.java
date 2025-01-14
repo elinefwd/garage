@@ -13,14 +13,59 @@ public class Vehicle {
     private Long vehicleID;
 
     @ManyToOne
-    private Customer customer;
+    private Customer customer; // Linking to Customer
 
     private String licensePlate;
     private String model;
     private int year;
     private String uploadedDocuments;
-    // optional: add any additional attributes as needed
 
+    // Getters and Setters
+    public Long getVehicleID() {
+        return vehicleID;
+    }
+
+    public void setVehicleID(Long vehicleID) {
+        this.vehicleID = vehicleID;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getUploadedDocuments() {
+        return uploadedDocuments;
+    }
+
+    public void setUploadedDocuments(String uploadedDocuments) {
+        this.uploadedDocuments = uploadedDocuments;
+    }
 }
-
-
