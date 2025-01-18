@@ -1,12 +1,6 @@
 package com.eindopdrachtbackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-import java.util.Optional;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "application_user") // Change the table name to avoid the reserved keyword
@@ -19,7 +13,7 @@ public class User {
     private String username;
     private String password;
 
-    private int role;  // Keep the role as int (or change to Role enum if needed)
+    private int role;  // Ensure you have a way to convert this int to a string for authorities
 
     // Getters and Setters
     public Long getUserId() {
@@ -47,12 +41,10 @@ public class User {
     }
 
     public int getRole() {
-        return role;
+        return role; // Ensure this returns the user’s role
     }
 
     public void setRole(int role) {
-        this.role = role;  // Ensure this is an integer value
+        this.role = role; // Ensure this is set correctly, maybe as integer or map to an enum if needed
     }
-
-
 }
