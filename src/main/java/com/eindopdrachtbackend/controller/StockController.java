@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.eindopdrachtbackend.service.StockService;
-
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/stock") // Ensure this matches your test setup
+@RequestMapping("/stock") // Ensure this matches your test setup
 public class StockController {
 
     @Autowired
