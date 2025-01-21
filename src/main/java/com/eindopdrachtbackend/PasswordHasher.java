@@ -6,18 +6,27 @@ public class PasswordHasher {
     public static void main(String[] args) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        // Example passwords
-        String password1 = "wachtwoord1";
-        String password2 = "wachtwoord2";
-        String password3 = "wachtwoord3";
+        // User passwords
+        String passwordEline = "wachtwoord1"; // Admin
+        String passwordKate = "wachtwoord4";  // New user
+        String passwordJohn = "wachtwoord2";  // Employee
+        String passwordJane = "wachtwoord3";  // Customer
+        String passwordJoe = "wachtwoord5";    // Password for Joe employee
+        String passwordJack = "wachtwoord6";   // Password for Jack customer
 
         // Generate and print hashed passwords
-        String hashedPassword1 = passwordEncoder.encode(password1);
-        String hashedPassword2 = passwordEncoder.encode(password2);
-        String hashedPassword3 = passwordEncoder.encode(password3);
+        String hashedPasswordEline = passwordEncoder.encode(passwordEline);
+        String hashedPasswordKate = passwordEncoder.encode(passwordKate);
+        String hashedPasswordJohn = passwordEncoder.encode(passwordJohn);
+        String hashedPasswordJane = passwordEncoder.encode(passwordJane);
+        String hashedPasswordJoe = passwordEncoder.encode(passwordJoe); // Hash for Joe
+        String hashedPasswordJack = passwordEncoder.encode(passwordJack); // Hash for Jack
 
-        System.out.println("Password 1 Hash: " + hashedPassword1);
-        System.out.println("Password 2 Hash: " + hashedPassword2);
-        System.out.println("Password 3 Hash: " + hashedPassword3);
+        System.out.println("Eline's Hashed Password: " + hashedPasswordEline);
+        System.out.println("Kate's Hashed Password: " + hashedPasswordKate);
+        System.out.println("John's Hashed Password: " + hashedPasswordJohn);
+        System.out.println("Jane's Hashed Password: " + hashedPasswordJane);
+        System.out.println("Joe's Hashed Password: " + hashedPasswordJoe); // Output for Joe
+        System.out.println("Jack's Hashed Password: " + hashedPasswordJack); // Output for Jack
     }
 }
