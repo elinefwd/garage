@@ -1,10 +1,10 @@
 package com.eindopdrachtbackend.model;
 
 import jakarta.persistence.*;
-import com.eindopdrachtbackend.model.Customer;
 
 @Entity
 public class Document {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Unique identifier for the document
@@ -17,7 +17,6 @@ public class Document {
     @ManyToOne // This indicates a many-to-one relationship with Customer
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer; // Link to the associated customer
-
 
     // Getters and Setters
     public Long getId() {
@@ -50,5 +49,10 @@ public class Document {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    // Additional method to easily fetch the customer's name
+    public String getCustomerName() {
+        return customer != null ? customer.getName() : null; // Safely retrieve customer's name
     }
 }

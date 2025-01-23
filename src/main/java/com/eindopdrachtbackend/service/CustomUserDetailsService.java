@@ -1,6 +1,6 @@
 package com.eindopdrachtbackend.service;
 
-import com.eindopdrachtbackend.model.User;
+import com.eindopdrachtbackend.model.ApplicationUser; // Update import
 import com.eindopdrachtbackend.security.CustomUserDetails;
 import com.eindopdrachtbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOptional = userRepository.findByUsername(username); // Find user by username
-        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found")); // Extract User object
+        Optional<ApplicationUser> userOptional = userRepository.findByUsername(username); // Change to ApplicationUser
+        ApplicationUser user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found")); // Extract ApplicationUser object
 
-        return new CustomUserDetails(user); // Create CustomUserDetails from User object
+        return new CustomUserDetails(user); // Create CustomUserDetails from ApplicationUser object
     }
 }

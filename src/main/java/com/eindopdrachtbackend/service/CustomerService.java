@@ -23,15 +23,25 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Optional<Customer> getCustomerById(Long customerId) { // Change int to Long
+    public Optional<Customer> getCustomerById(Long customerId) {
         return customerRepository.findById(customerId);
     }
 
     public Customer updateCustomer(Customer updatedCustomer) {
+        // Validate that the customer exists before updating
+        if (!customerRepository.existsById(updatedCustomer.getCustomerId())) {
+            throw new IllegalArgumentException("Customer not found");
+        }
         return customerRepository.save(updatedCustomer);
     }
 
-    public void deleteCustomer(Long customerId) { // Change int to Long
+    public void deleteCustomer(Long customerId) {
         customerRepository.deleteById(customerId);
+    }
+
+    // Method to find the customer by username
+    public Customer findByUsername(String username) {
+        return customerRepository.findByName(username) // Assuming `findByUsername` is implemented in `CustomerRepository`
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found with username: " + username));
     }
 }
