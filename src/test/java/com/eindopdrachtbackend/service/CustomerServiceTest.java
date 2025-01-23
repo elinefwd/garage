@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ class CustomerServiceTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void testCreateCustomer() {
         // Arrange
         Customer customer = new Customer();
@@ -50,6 +52,7 @@ class CustomerServiceTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void testGetCustomerById_Exists() {
         // Arrange
         Customer customer = new Customer();
@@ -67,6 +70,7 @@ class CustomerServiceTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void testGetCustomerById_NotExists() {
         // Arrange
         when(customerRepository.findById(anyLong())).thenReturn(Optional.empty());
@@ -80,6 +84,7 @@ class CustomerServiceTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void testUpdateCustomer() {
         // Arrange
         Customer updatedCustomer = new Customer();
@@ -104,6 +109,7 @@ class CustomerServiceTest {
 
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void testDeleteCustomer() {
         // Arrange
         Long customerId = 1L;

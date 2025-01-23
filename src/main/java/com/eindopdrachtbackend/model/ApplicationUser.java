@@ -3,8 +3,8 @@ package com.eindopdrachtbackend.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "application_user") // Change the table name to avoid the reserved keyword
-public class User {
+@Table(name = "application_user")
+public class ApplicationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +13,7 @@ public class User {
     private String username;
     private String password;
 
-    private int role;  // Ensure you have a way to convert this int to a string for authorities
+    private String role;  // Change from int to String
 
     // Getters and Setters
     public Long getUserId() {
@@ -40,11 +40,11 @@ public class User {
         this.password = password;
     }
 
-    public int getRole() {
-        return role; // Ensure this returns the user’s role
+    public String getRole() {
+        return role; // Change type of role to String
     }
 
-    public void setRole(int role) {
-        this.role = role; // Ensure this is set correctly, maybe as integer or map to an enum if needed
+    public void setRole(String role) {
+        this.role = role; // Ensure this is set correctly as a string
     }
 }

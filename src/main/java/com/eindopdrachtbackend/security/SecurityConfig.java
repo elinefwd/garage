@@ -3,6 +3,7 @@ package com.eindopdrachtbackend.security;
 import com.eindopdrachtbackend.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,8 +36,18 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for APIs
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/admin/**").hasRole("ADMIN") // Only accessible for ADMIN users
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // Accessible for USER and ADMIN
                         .requestMatchers("/auth/login").permitAll() // Allow public access to authentication endpoint
+                        .requestMatchers("/stock/**").hasAnyRole("ADMIN", "EMPLOYEE") // ADMIN and EMPLOYEE access for stock operations
+                        .requestMatchers("/vehicles/**").hasAnyRole("ADMIN", "EMPLOYEE") // ADMIN and EMPLOYEE access for vehicle operations
+                        .requestMatchers("/inspections/**").hasAnyRole("ADMIN", "EMPLOYEE") // ADMIN and EMPLOYEE access for inspection operations
+                        .requestMatchers("/users/**").hasRole("ADMIN") // ADMIN can create, view, update, and delete users
+
+                        .requestMatchers(HttpMethod.POST, "/upload").hasRole("ADMIN") // ADMIN can upload documents
+
+                        .requestMatchers(HttpMethod.GET, "/customers/me").hasRole("CUSTOMER") // Customers can access their own profile
+                        .requestMatchers(HttpMethod.GET, "/customers/me/documents").hasRole("CUSTOMER") // Customers can view their own documents
+                        .requestMatchers("/customers/**").hasAnyRole("ADMIN", "EMPLOYEE", "CUSTOMER") // Allow ADMIN, EMPLOYEE, and CUSTOMER access
+
                         .anyRequest().denyAll() // Deny access to all other requests
                 )
                 .sessionManagement(session ->

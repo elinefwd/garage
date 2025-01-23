@@ -1,9 +1,10 @@
 package com.eindopdrachtbackend.security;
 
-import com.eindopdrachtbackend.model.User; // Import the User model
+import com.eindopdrachtbackend.model.ApplicationUser;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class CustomUserDetails implements UserDetails {
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(User user) { // Accept User instance in the constructor
+    public CustomUserDetails(ApplicationUser user) { // Accept User instance in the constructor
         this.username = user.getUsername();
         this.password = user.getPassword();
         // Assuming role is an int, map it to a granted authority

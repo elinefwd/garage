@@ -1,64 +1,64 @@
 package com.eindopdrachtbackend.controller;
 
 import com.eindopdrachtbackend.dto.UserDto;
-import com.eindopdrachtbackend.model.User;
+import com.eindopdrachtbackend.model.ApplicationUser; // Updated import
 import com.eindopdrachtbackend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize; // Import for role-based access control
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.eindopdrachtbackend.exception.UserNotFound;
 
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users") // Base URL for user-related APIs
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('ADMIN')") // Accessible to ADMIN only
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody UserDto userDto) {
-        User createdUser = userService.createUser(
+    public ResponseEntity<ApplicationUser> createUser(@Valid @RequestBody UserDto userDto) {
+        ApplicationUser createdUser = userService.createUser(
                 userDto.getUsername(),
                 userDto.getPassword(),
-                userDto.getRole()
+                userDto.getRole() // Ensure this is a String
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'EMPLOYEE')") // Accessible to ADMIN, USER, and EMPLOYEE
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER', 'EMPLOYEE')")
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> userOptional = Optional.ofNullable(userService.getUserById(id));
+    public ResponseEntity<ApplicationUser> getUserById(@PathVariable Long id) {
+        Optional<ApplicationUser> userOptional = Optional.ofNullable(userService.getUserById(id));
         if (userOptional.isPresent()) {
-            return ResponseEntity.ok(userOptional.get()); // Return user details
+            return ResponseEntity.ok(userOptional.get());
         } else {
             throw new UserNotFound("User not found with id: " + id);
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'EMPLOYEE')") // Accessible to ADMIN, USER, and EMPLOYEE
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER', 'EMPLOYEE')")
     @GetMapping("/username/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-        User user = userService.findByUsername(username)
+    public ResponseEntity<ApplicationUser> getUserByUsername(@PathVariable String username) {
+        ApplicationUser user = userService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFound("User not found with username: " + username));
-        return ResponseEntity.ok(user); // Return the found user
+        return ResponseEntity.ok(user);
     }
 
-    @PreAuthorize("hasRole('USER')") // Allow regular users to update their details
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<ApplicationUser> updateUser(@PathVariable Long id, @RequestBody ApplicationUser user) {
         user.setUserId(id);
-        User updatedUser = userService.updateUser(user);
+        ApplicationUser updatedUser = userService.updateUser(user);
         return ResponseEntity.ok(updatedUser);
     }
 
-    @PreAuthorize("hasRole('ADMIN')") // Accessible to ADMIN only
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
@@ -70,5 +70,3 @@ public class UserController {
         return ResponseEntity.ok("Service is running!");
     }
 }
-
-

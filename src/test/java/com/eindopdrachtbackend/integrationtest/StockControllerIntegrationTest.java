@@ -31,9 +31,11 @@ class StockControllerIntegrationTest {
     @MockBean
     private StockService stockService;
 
+    private static final String STOCK_ENDPOINT = "/stock"; // Updated endpoint without "api"
+
     // Test 1: Verifying GET endpoint for a Stock by ID
     @Test
-    @WithMockUser // This simulates a logged-in user
+    @WithMockUser(roles = "ADMIN")
     void testGetStockById() throws Exception {
         Stock stock = new Stock();
         stock.setId(1L);
@@ -43,7 +45,7 @@ class StockControllerIntegrationTest {
 
         when(stockService.getStockById(1L)).thenReturn(Optional.of(stock));
 
-        mockMvc.perform(get("/api/stock/1"))
+        mockMvc.perform(get(STOCK_ENDPOINT + "/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.partName").value("Transmission"))
                 .andExpect(jsonPath("$.quantity").value(10))
@@ -52,7 +54,7 @@ class StockControllerIntegrationTest {
 
     // Test 2: Verifying POST endpoint for creating a Stock
     @Test
-    @WithMockUser // This simulates a logged-in user
+    @WithMockUser(roles = "ADMIN")
     void testCreateStock() throws Exception {
         Stock stock = new Stock();
         stock.setId(2L);
@@ -64,7 +66,7 @@ class StockControllerIntegrationTest {
 
         String stockJson = "{\"partName\": \"Engine\", \"quantity\": 5, \"price\": 299.99}";
 
-        mockMvc.perform(post("/api/stock")
+        mockMvc.perform(post(STOCK_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(stockJson))
                 .andExpect(status().isCreated())
@@ -73,6 +75,16 @@ class StockControllerIntegrationTest {
                 .andExpect(jsonPath("$.price").value(299.99));
     }
 
-    // Optionally: Add more tests for error scenarios
-    // For example: Handling stock not found, bad requests, etc.
+    // New test: Verifying GET endpoint for a Stock not found
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void testGetStockByIdNotFound() throws Exception {
+        when(stockService.getStockById(999L)).thenReturn(Optional.empty());
+
+        mockMvc.perform(get(STOCK_ENDPOINT + "/999"))
+                .andExpect(status().isNotFound());
+    }
+
+
+    // Optionally: Include more tests for other scenarios as needed.
 }

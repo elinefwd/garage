@@ -7,6 +7,7 @@ import com.eindopdrachtbackend.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +24,7 @@ public class UploadController {
     @Autowired
     private CustomerService customerService; // Use of CustomerService to find customers
 
+    @PreAuthorize("hasRole('ADMIN')") // Restrict access to ADMIN
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
                                                    @RequestParam("customerId") Long customerId) {
@@ -36,7 +38,7 @@ public class UploadController {
             String filename = file.getOriginalFilename();
 
             // Create and save the document
-            Document document = documentService.saveDocument(filename, fileContent);
+            Document document = documentService.saveDocument(filename, fileContent); // Save document with filename and file content
 
             // Fetch the customer and associate the document with it
             Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
