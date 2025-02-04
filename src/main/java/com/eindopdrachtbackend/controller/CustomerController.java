@@ -35,9 +35,10 @@ public class CustomerController {
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
         Optional<Customer> customer = customerService.getCustomerById(id);
-        return customer.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        // Loading the vehicles along with the customer
+        return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 
     // Allow ADMIN and EMPLOYEE to update customer details
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")

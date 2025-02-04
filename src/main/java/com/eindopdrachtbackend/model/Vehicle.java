@@ -6,6 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
 public class Vehicle {
     @Id
@@ -13,10 +17,15 @@ public class Vehicle {
     private Long vehicleID;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false) // Explicitly define the join column
     private Customer customer; // Linking to Customer
 
+    @NotBlank(message = "License Plate is required")
     private String licensePlate;
+
+    @NotBlank(message = "Model is required")
     private String model;
+
     private int year;
     private String uploadedDocuments;
 

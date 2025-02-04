@@ -1,11 +1,11 @@
 package com.eindopdrachtbackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
+
 
 @Entity
 public class Customer {
@@ -24,7 +24,11 @@ public class Customer {
     @Email(message = "Email should be valid")
     private String email;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Vehicle> vehicles; // List to hold vehicles associated with the customer
+
     // Getters and Setters
+
     public Long getCustomerId() {
         return customerId;
     }
@@ -63,5 +67,13 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 }
