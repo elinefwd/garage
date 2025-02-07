@@ -3,9 +3,9 @@ package com.eindopdrachtbackend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
-
 
 @Entity
 public class Customer {
@@ -25,6 +25,7 @@ public class Customer {
     private String email;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore // Prevent circular references during JSON serialization
     private List<Vehicle> vehicles; // List to hold vehicles associated with the customer
 
     // Getters and Setters

@@ -2,6 +2,7 @@ package com.eindopdrachtbackend.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
 public class Document {
 

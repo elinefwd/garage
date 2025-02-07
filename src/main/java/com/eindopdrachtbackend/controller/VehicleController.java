@@ -26,8 +26,9 @@ public class VehicleController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle) {
+        // Delegate the creation logic to the service
         Vehicle createdVehicle = vehicleService.createVehicle(vehicle);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdVehicle);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdVehicle); // Return created vehicle and 201 Created status
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -47,5 +48,16 @@ public class VehicleController {
     public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
         vehicleService.deleteVehicle(id);
         return ResponseEntity.noContent().build(); // 204 No Content
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+    @GetMapping("/{id}")
+    public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id) {
+        Vehicle vehicle = vehicleService.findById(id);
+        if (vehicle != null) {
+            return ResponseEntity.ok(vehicle); // Return 200 OK with the vehicle
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
 }
