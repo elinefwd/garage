@@ -30,7 +30,7 @@ The application is configured to automatically create the PostgreSQL database sc
 **Ensure you connect your database to your IntelliJ project by using the database tool window on the right. Add your PostgreSQL database.**
 
 Update the following properties in the `application.properties` file as required for your environment:
-```properties
+properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
 spring.datasource.username=your_database_username
 spring.datasource.password=your_database_password
@@ -324,7 +324,7 @@ PUT http://localhost:8080/users/1
 
 Delete user
 DELETE http://localhost:8080/users/1
-```
+
 
 ### 3. Troubleshooting and contact info
 When you are having doubt about functionalities the easiest is to ask Chat GPT or another AI help tool, they usually come with a lot of different options to help you out. Is there still doubt remained or any other questions, don’t hesitate to contact me on elinefwd@gmail.com.
