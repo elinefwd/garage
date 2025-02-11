@@ -26,16 +26,19 @@ After cloning, IntelliJ IDEA should prompt you to install the required dependenc
 ### 3. Run the Project
 Execute the application by clicking the green play button in IntelliJ IDEA.
 
-### Database Initialization
-The application is configured to automatically create the PostgreSQL database schema and populate it with predefined data upon startup. This includes data from the `data.sql` file. All other data should be added manually using Postman or PGAdmin.
+### 4.  Database Initialization Steps
+### Step 1: Automatic Database Creation
+- The application automatically creates the PostgreSQL database schema and populates it with predefined data upon startup.
 
-**Ensure you connect your database to your IntelliJ project by using the database tool window on the right. Add your PostgreSQL database.**
+### Step 2: Connect Your Database
+- Use the **Database Tool Window** in IntelliJ to connect your PostgreSQL database.
 
-Update the following properties in the `application.properties` file as required for your environment:
-properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
-spring.datasource.username=your_database_username
-spring.datasource.password=your_database_password
+### Step 3: Update Application Properties
+- Update the `application.properties` file:
+
+- spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
+- spring.datasource.username=your_database_username
+- spring.datasource.password=your_database_password
 
 
 
