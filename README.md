@@ -39,27 +39,15 @@ spring.datasource.password=your_database_password
 
 
 
-Test users
-These test users are also in the Data.sql file so they are inserted automatically after you run the project connected to your database.
+## Test Users
+| Username     | Password     | Role     |
+|--------------|--------------|----------|
+| eline        | wachtwoord1  | ADMIN    |
+| john_doe     | wachtwoord2  | EMPLOYEE |
+| jane_doe     | wachtwoord3  | CUSTOMER |
 
 
-{
-"username": "eline",
-"password": "wachtwoord1",
-"role": "ADMIN"
-},
-{
-"username": "john_doe",
-"password": "wachtwoord2",
-"role": "EMPLOYEE"
-},
-{
-"username": "jane_doe",
-"password": "wachtwoord3",
-"role": "CUSTOMER"
-}
 
-]
 
 List of tried and tested requests.
 With these request you can manually insert your own data.
