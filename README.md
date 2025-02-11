@@ -38,8 +38,9 @@ spring.datasource.password=your_database_password
 
 
 Test users
-These test users are also in the Data.sql file so they are inserrted automatically after you run the project connected to your database.
-]
+These test users are also in the Data.sql file so they are inserted automatically after you run the project connected to your database.
+
+
 {
 "username": "eline",
 "password": "wachtwoord1",
@@ -84,6 +85,15 @@ Customer
 {
 "username": "joe",  // or any other user you created
 "password": "wachtwoord5"  // correct password for the chosen user
+
+}
+
+{
+"username": "jack",  // or any other user you created
+"password": "wachtwoord6"  // correct password for the chosen user
+}
+
+
 }
 
 {
@@ -179,6 +189,7 @@ And you put the updated information in the body like this for example:
 
 You should get a 200 and the updated info in the body.
 
+
 Delete stock
 DELETE http://localhost:8080/stock/1 (id number 1 for example)
 
@@ -187,6 +198,18 @@ You should get a 204 and no content in the response.
 
 Add vehicles;
 POST http://localhost:8080/vehicles
+
+
+
+Delete stock
+DELETE http://localhost:8080/stock/1 (id number 1 for example)
+
+You should get a 204 and no content in the response.
+
+
+Add vehicles;
+POST http://localhost:8080/vehicles
+
 
 Put the info in the body like this
 {
@@ -328,5 +351,6 @@ DELETE http://localhost:8080/users/1
 
 ### 3. Troubleshooting and contact info
 When you are having doubt about functionalities the easiest is to ask Chat GPT or another AI help tool, they usually come with a lot of different options to help you out. Is there still doubt remained or any other questions, don’t hesitate to contact me on elinefwd@gmail.com.
+
 
 
