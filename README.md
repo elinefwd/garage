@@ -82,19 +82,145 @@ With these request you can manually insert your own data.
 | PUT         | /users/{id}                           | Update user information                   |
 | DELETE      | /users/{id}                           | Delete user                               |
 
-## Response Formats
-# API Responses
 
+
+# API Responses
 ## Successful Login Responses
 | Response Code | Description      | Example Response                                                                                                                       |
 |---------------|------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | 200           | Successful Login |                                                                                                                                        |
 |               |                  | ```json                                                                                                                                |
 |               |                  | {                                                                                                                                      |
-|               |                  | "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrIiwiaWF0<br/>IjoxNz/M3NDU2MTc0LCJleHAiOjE3MzgzMjAxNzR9.<br/>7SGBZFlVMf7uoLG5BwCicQVk7lFtI9ysylFYjkSuByc" |
+|               |                  | "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrIiwiaWF0IjoxNz/M3NDU2MTc0LCJleHAiOjE3MzgzMjAxNzR9.<br/>7SGBZFlVMf7uoLG5BwCicQVk7lFtI9ysylFYjkSuByc" |
 |               |                  | }                             ```                                                                                                      |
 |               |                  |                                                                                                                                        |
-note: We use this token for authentification as bearer token so you can make the other requests.
+
+> Note: We use this token for authentication as a bearer token, so you can make the other requests.
+
+## Additional Successful Responses
+
+| Response Code | Description            | Example Response                                                                                                                       |
+|---------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| 200           | Customer Added         | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "message": "Customer added successfully.",                                                                                            |
+|               |                        | "customerId": 1                                                                                                                    |
+|               |                        | }                                                                                                                                      |
+| 200           | Customer Retrieved      | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "customerId": 1,                                                                                                                   |
+|               |                        | "name": "Jane Doe",                                                                                                                  |
+|               |                        | "address": "123 Main St",                                                                                                           |
+|               |                        | "phoneNumber": "555-6789",                                                                                                          |
+|               |                        | "email": "jane.doe@example.com",                                                                                                     |
+|               |                        | "vehicles": [                                                                                                                         |
+|               |                        | {                                                                                                                                      |
+|               |                        | "vehicleID": 6,                                                                                                                     |
+|               |                        | "licensePlate": "XYZ-1234",                                                                                                         |
+|               |                        | "model": "Toyota Camry",                                                                                                             |
+|               |                        | "year": 2020,                                                                                                                        |
+|               |                        | "uploadedDocuments": "documents/path/to/document.pdf"                                                                               |
+|               |                        | }                                                                                                                                      |
+|               |                        | ]                                                                                                                                      |
+|               |                        | }                                                                                                                                      |
+| 200           | Customer Updated       | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "message": "Customer updated successfully.",                                                                                          |
+|               |                        | "customerId": 1                                                                                                                    |
+|               |                        | }                                                                                                                                      |
+| 204           | Customer Deleted       | (No content)                                                                                                                          |
+| 201           | Stock Added            | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "message": "Stock added successfully.",                                                                                              |
+|               |                        | "stockId": 2                                                                                                                       |
+|               |                        | }                                                                                                                                      |
+| 200           | See All Stock          | (Information about all stock)                                                                                                       |
+| 200           | Stock Retrieved by ID  | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "partName": "WheelX",                                                                                                             |
+|               |                        | "quantity": 100,                                                                                                                     |
+|               |                        | "price": 99.99                                                                                                                       |
+|               |                        | }                                                                                                                                      |
+| 200           | Stock Updated          | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "message": "Stock updated successfully.",                                                                                             |
+|               |                        | "stockId": 2                                                                                                                       |
+|               |                        | }                                                                                                                                      |
+| 204           | Stock Deleted          | (No content)                                                                                                                          |
+| 200           | Vehicle Added          | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "message": "Vehicle added successfully.",                                                                                             |
+|               |                        | "vehicleId": 6                                                                                                                     |
+|               |                        | }                                                                                                                                      |
+| 200           | See All Vehicles       | (Information about all vehicles)                                                                                                       |
+| 200           | Vehicle Updated        | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "message": "Vehicle updated successfully.",                                                                                            |
+|               |                        | "vehicleId": 6                                                                                                                     |
+|               |                        | }                                                                                                                                      |
+| 204           | Vehicle Deleted        | (No content)                                                                                                                          |
+| 200           | Inspection Added       | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "inspectionId": 4,                                                                                                                   |
+|               |                        | "vehicle": {                                                                                                                          |
+|               |                        | "licensePlate": "XYZ-1234",                                                                                                         |
+|               |                        | "model": "Toyota Camry",                                                                                                             |
+|               |                        | "year": 2020,                                                                                                                        |
+|               |                        | "uploadedDocuments": "documents/path/to/document.pdf",                                                                               |
+|               |                        | "vehicleID": 6                                                                                                                      |
+|               |                        | },                                                                                                                                     |
+|               |                        | "action": "Full Inspection",                                                                                                          |
+|               |                        | "cost": 150.0,                                                                                                                      |
+|               |                        | "date": "2025-02-05"                                                                                                                |
+|               |                        | }                                                                                                                                      |
+| 200           | See All Inspections     | (Information about all inspections)                                                                                                   |
+| 200           | Inspection Retrieved by ID | ```json                                                                                                                        |
+|               |                        | {                                                                                                                                      |
+|               |                        | "inspectionId": 1,                                                                                                                   |
+|               |                        | "vehicle": {                                                                                                                          |
+|               |                        | "licensePlate": "XYZ-1234",                                                                                                         |
+|               |                        | "model": "Toyota Camry",                                                                                                             |
+|               |                        | "year": 2020,                                                                                                                        |
+|               |                        | "uploadedDocuments": "documents/path/to/document.pdf",                                                                               |
+|               |                        | "vehicleID": 5                                                                                                                      |
+|               |                        | "customer": {                                                                                                                       |
+|               |                        | "customerId": 1,                                                                                                                    |
+|               |                        | "name": "Jane Doe",                                                                                                                  |
+|               |                        | "address": "123 Main St",                                                                                                           |
+|               |                        | "phoneNumber": "555-6789",                                                                                                          |
+|               |                        | "email": "jane.doe@example.com"                                                                                                      |
+|               |                        | }                                                                                                                                      |
+|               |                        | },                                                                                                                                     |
+|               |                        | "action": "Full Inspection, Replacement Wheel, Replacement Wipers",                                                                   |
+|               |                        | "cost": 300.0,                                                                                                                      |
+|               |                        | "date": "2025-02-05"                                                                                                                |
+|               |                        | }                                                                                                                                      |
+| 200           | User Retrieved         | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "userId": 1,                                                                                                                         |
+|               |                        | "username": "eline",                                                                                                                 |
+|               |                        | "password": "$2a$10$uBeRC5SWvpG0EdKrEgOleuifrICHp/aNcG1vElPDd921G329t0YWG",                                                          |
+|               |                        | "role": "ADMIN"                                                                                                                      |
+|               |                        | }                                                                                                                                      |
+| 200           | User Retrieved by Username | ```json                                                                                                                             |
+|               |                        | {                                                                                                                                      |
+|               |                        | "userId": 1,                                                                                                                         |
+|               |                        | "username": "eline",                                                                                                                 |
+|               |                        | "password": "$2a$10$uBeRC5SWvpG0EdKrEgOleuifrICHp/aNcG1vElPDd921G329t0YWG",                                                          |
+|               |                        | "role": "ADMIN"                                                                                                                      |
+|               |                        | }                                                                                                                                      |
+| 200           | User Updated            | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "message": "User updated successfully.",                                                                                              |
+|               |                        | "userId": 1                                                                                                                         |
+|               |                        | }                                                                                                                                      |
+| 204           | User Deleted            | (No content)                                                                                                                          |
+| 200           | Uploaded Car Papers     | ```json                                                                                                                                |
+|               |                        | {                                                                                                                                      |
+|               |                        | "message": "File uploaded successfully: Screenshot 2025-02-07 at 09.58.14.png"                                                     |
+|               |                        | }                                                                                                                                      |
+|               |                        |                                                                                                                                        |
+
 
 ## Error Responses
 | Response Code | Description                           | Example Response                             |
