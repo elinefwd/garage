@@ -86,14 +86,15 @@ With these request you can manually insert your own data.
 # API Responses
 
 ## Successful Login Responses
-| Response Code | Description        | Example Response                                   |
-|---------------|--------------------|----------------------------------------------------|
-| 200           | Successful Login    |                                                    |
-|               |                    | ```json                                           |
-|               |                    | {                                                  |
-|               |                    |   "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrIiwiaWF0IjoxNzM3NDU2MTc0LCJleHAiOjE3MzgzMjAxNzR9.7SGBZFlVMf7uoLG5BwCicQVk7lFtI9ysylFYjkSuByc" |
-|               |                    | }                                                  |
-|               |                    | ```                                              |
+| Response Code | Description      | Example Response                                                                                                                       |
+|---------------|------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| 200           | Successful Login |                                                                                                                                        |
+|               |                  | ```json                                                                                                                                |
+|               |                  | {                                                                                                                                      |
+|               |                  | "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrIiwiaWF0<br/>IjoxNz/M3NDU2MTc0LCJleHAiOjE3MzgzMjAxNzR9.<br/>7SGBZFlVMf7uoLG5BwCicQVk7lFtI9ysylFYjkSuByc" |
+|               |                  | }                             ```                                                                                                      |
+|               |                  |                                                                                                                                        |
+note: We use this token for authentification as bearer token so you can make the other requests.
 
 ## Error Responses
 | Response Code | Description                           | Example Response                             |
