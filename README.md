@@ -31,7 +31,7 @@ guide for the successful setup and operation of the API.
 | PGAdmin          | Database management tool                       |
 | Postman          | Tool for checking HTTP requests                |
 
-## Installation Instructions
+## 3. Installation Instructions
 
 ### 1. Clone the Repository
 Begin by cloning the repository into your IntelliJ IDEA workspace.
