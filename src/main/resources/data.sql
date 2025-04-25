@@ -17,8 +17,5 @@ INSERT INTO application_user (username, password, role) VALUES
 INSERT INTO application_user (username, password, role) VALUES
     ('joe', '$2a$10$hDUGvYU.21uh9EHBMIQgl.Q40Zno7KXy4Ofvla4tvqU7zU7OAUw1.', 'EMPLOYEE'); -- Password: wachtwoord5
 
--- Insert new customer user Jack
-INSERT INTO application_user (username, password, role) VALUES
-    ('jack', '$2a$10$AMdR76d4DJObDSf9VEUr5OKpy2dbDbp5J7a.3GPWnhtsf2Amlhf2y', 'CUSTOMER'); -- Password: wachtwoord6
 
 -- Continue adding other users as necessary
