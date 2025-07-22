@@ -27,6 +27,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore // Prevent circular references during JSON serialization
     private List<Vehicle> vehicles; // List to hold vehicles associated with the customer
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private ApplicationUser user;
+
 
     // Getters and Setters
 
@@ -77,4 +81,14 @@ public class Customer {
     public void setVehicles(List<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
+
+    public ApplicationUser getUser() {
+        return user;
+    }
+
+    public void setUser(ApplicationUser user) {
+        this.user = user;
+    }
+
+
 }

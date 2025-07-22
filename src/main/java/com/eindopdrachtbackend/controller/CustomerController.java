@@ -1,5 +1,8 @@
 package com.eindopdrachtbackend.controller;
 
+import com.eindopdrachtbackend.dto.CustomerDto;
+import com.eindopdrachtbackend.exception.UserNotFound;
+import com.eindopdrachtbackend.model.ApplicationUser;
 import com.eindopdrachtbackend.model.Customer;
 import com.eindopdrachtbackend.model.Document;
 import com.eindopdrachtbackend.service.CustomerService;
@@ -8,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import com.eindopdrachtbackend.repository.UserRepository;
+import com.eindopdrachtbackend.repository.CustomerRepository;
 
 import java.security.Principal;
 import java.util.List;
@@ -19,16 +24,35 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private UserRepository UserRepository;
+
 
     @Autowired
     private DocumentService documentService; // Service to handle document-related operations
+    @Autowired
+    private CustomerRepository CustomerRepository;
 
     // Allow ADMIN and EMPLOYEE to create a new customer
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.createCustomer(customer.getName(), customer.getAddress(), customer.getPhoneNumber(), customer.getEmail());
+    public ResponseEntity<Customer> createCustomer(@RequestBody CustomerDto customerDto) {
+        // Haal de user op uit repo via userId
+        ApplicationUser user = UserRepository.findById(customerDto.getUserId())
+                .orElseThrow(() -> new UserNotFound("User not found"));
+
+        // Maak nieuwe Customer
+        Customer customer = new Customer();
+        customer.setName(customerDto.getName());
+        customer.setAddress(customerDto.getAddress());
+        customer.setPhoneNumber(customerDto.getPhoneNumber());
+        customer.setEmail(customerDto.getEmail());
+        customer.setUser(user); // koppeling
+
+        Customer savedCustomer = CustomerRepository.save(customer);
+        return ResponseEntity.ok(savedCustomer);
     }
+
 
     // Allow ADMIN and EMPLOYEE to get customer by ID
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")

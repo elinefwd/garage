@@ -24,16 +24,22 @@ public class VehicleService {
     }
 
     public Vehicle createVehicle(Vehicle vehicle) {
-        // Check if the customer ID is present and find the customer
+        // Check of kenteken al bestaat
+        Optional<Vehicle> existingVehicle = vehicleRepository.findByLicensePlate(vehicle.getLicensePlate());
+        if (existingVehicle.isPresent()) {
+            throw new RuntimeException("Kenteken bestaat al");
+        }
+
+        // Controleer of de customer bestaat, dat doe je al
         if (vehicle.getCustomer() != null && vehicle.getCustomer().getCustomerId() != null) {
             Optional<Customer> optionalCustomer = customerRepository.findById(vehicle.getCustomer().getCustomerId());
             if (optionalCustomer.isPresent()) {
-                vehicle.setCustomer(optionalCustomer.get()); // Set the customer object
+                vehicle.setCustomer(optionalCustomer.get());
             } else {
-                throw new RuntimeException("Customer not found");
+                throw new RuntimeException("Customer niet gevonden");
             }
         } else {
-            throw new RuntimeException("Customer ID is required");
+            throw new RuntimeException("Customer ID is vereist");
         }
 
         return vehicleRepository.save(vehicle);

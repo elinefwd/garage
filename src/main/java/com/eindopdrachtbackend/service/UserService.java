@@ -5,6 +5,8 @@ import com.eindopdrachtbackend.repository.UserRepository;
 import com.eindopdrachtbackend.exception.UserNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -13,6 +15,7 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public ApplicationUser createUser(String username, String password, String role) {
         ApplicationUser user = new ApplicationUser(); // Change to ApplicationUser
@@ -38,10 +41,8 @@ public class UserService {
         userRepository.deleteById(id); // Room for implementing business logic
     }
 
-    // Placeholder for actual password hashing logic
     private String hashPassword(String password) {
-        // Implement your password hashing logic here
-        return password; // For demonstration, return the original password
+        return passwordEncoder.encode(password);
     }
 
     public ApplicationUser updateUser(ApplicationUser user) { // Change to ApplicationUser

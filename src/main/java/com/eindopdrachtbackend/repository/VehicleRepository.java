@@ -3,6 +3,9 @@ package com.eindopdrachtbackend.repository;
 import com.eindopdrachtbackend.model.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
-    // You can add custom query methods here if needed
+    Optional<Vehicle> findByLicensePlate(String licensePlate);
+
 }
