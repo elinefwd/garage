@@ -5,6 +5,7 @@ import com.eindopdrachtbackend.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,15 +14,19 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+
     public Customer createCustomer(String name, String address, String phoneNumber, String email) {
         Customer customer = new Customer();
         customer.setName(name);
         customer.setAddress(address);
         customer.setPhoneNumber(phoneNumber);
         customer.setEmail(email);
-
-        return customerRepository.save(customer);
+        Customer savedCustomer = customerRepository.save(customer);
+        System.out.println("Customer opgeslagen met ID: " + savedCustomer.getCustomerId());
+        return savedCustomer;
     }
+
+
 
     public Optional<Customer> getCustomerById(Long customerId) {
         return customerRepository.findById(customerId);
@@ -44,4 +49,10 @@ public class CustomerService {
         return customerRepository.findByName(username) // Assuming `findByUsername` is implemented in `CustomerRepository`
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found with username: " + username));
     }
+
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
+    }
+
+
 }

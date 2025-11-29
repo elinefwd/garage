@@ -16,69 +16,49 @@ public class InspectionService {
     private InspectionRepository inspectionRepository;
 
     @Autowired
-    private VehicleService vehicleService; // Inject the VehicleService
+    private VehicleService vehicleService;
 
     public List<Inspection> getAllInspections() {
-        return inspectionRepository.findAll(); // Return all inspections from the repository
+        return inspectionRepository.findAll();
     }
 
     public Inspection findById(Long id) {
-        Optional<Inspection> optionalInspection = inspectionRepository.findById(id);
-        return optionalInspection.orElse(null); // Return null if not found
+        Optional<Inspection> opt = inspectionRepository.findById(id);
+        return opt.orElse(null);
     }
 
     public Inspection registerInspection(Inspection inspection) {
-        // Validate that the vehicle exists
         if (inspection.getVehicle() != null && inspection.getVehicle().getVehicleID() != null) {
-            System.out.println("Registering inspection: " + inspection); // Log the incoming inspection object
-
             Vehicle vehicle = vehicleService.findById(inspection.getVehicle().getVehicleID());
             if (vehicle == null) {
                 throw new RuntimeException("Vehicle not found");
             }
-            inspection.setVehicle(vehicle); // Set the existing vehicle
+            inspection.setVehicle(vehicle);
         } else {
             throw new RuntimeException("Vehicle information is required");
         }
-
-        // Calculate costs based on the actions selected
         double totalCost = calculateCost(inspection.getAction());
-        inspection.setCost(totalCost); // Set the calculated cost
-        return inspectionRepository.save(inspection); // Save the inspection and return it
+        inspection.setCost(totalCost);
+        return inspectionRepository.save(inspection);
     }
 
-
-
-
-    private double calculateCost(String actions) {
+    public double calculateCost(String actions) {
         double totalCost = 0.0;
-
-        // Split the actions by comma or other delimiters
         String[] actionList = actions.split(",");
-
         for (String action : actionList) {
-            switch (action.trim()) { // Trim whitespace from the action
-                case "Basic Check":
-                    totalCost += 50.00; // Cost for Basic Check
-                    break;
-                case "Full Inspection":
-                    totalCost += 150.00; // Cost for Full Inspection
-                    break;
-                case "Replacement Mirror":
-                    totalCost += 75.00; // Cost for Mirror Replacement
-                    break;
-                case "Replacement Wheel":
-                    totalCost += 120.00; // Cost for Wheel Replacement
-                    break;
-                case "Replacement Wipers":
-                    totalCost += 30.00; // Cost for Wiper Replacement
-                    break;
-                default:
-                    // Log or handle unknown actions if necessary
-                    break;
+            switch (action.trim()) {
+                case "Basic Check": totalCost += 50; break;
+                case "Full Inspection": totalCost += 150; break;
+                case "Replacement Mirror": totalCost += 75; break;
+                case "Replacement Wheel": totalCost += 120; break;
+                case "Replacement Wipers": totalCost += 30; break;
+                default: break;
             }
         }
+        return totalCost;
+    }
 
-        return totalCost; // Return the total calculated cost
+    public void deleteById(Long id) {
+        inspectionRepository.deleteById(id);
     }
 }

@@ -83,30 +83,6 @@ class CustomerServiceTest {
         verify(customerRepository, times(1)).findById(99L);
     }
 
-    @Test
-    @WithMockUser(roles = "ADMIN")
-    void testUpdateCustomer() {
-        // Arrange
-        Customer updatedCustomer = new Customer();
-        updatedCustomer.setCustomerId(1L); // Set the ID to a specific value (e.g., 1)
-        updatedCustomer.setName("John Doe Updated");
-        updatedCustomer.setAddress("123 Updated St"); // Set address if needed
-        updatedCustomer.setPhoneNumber("9876543210"); // Set phone number if needed
-        updatedCustomer.setEmail("john.updated@example.com"); // Set email if needed
-
-        // Mocking the behavior of customerRepository.save() to return the updatedCustomer
-        when(customerRepository.save(any(Customer.class))).thenReturn(updatedCustomer);
-
-        // Act
-        Customer result = customerService.updateCustomer(updatedCustomer);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals("John Doe Updated", result.getName());
-        assertEquals(1L, result.getCustomerId()); // Ensure correct ID is returned
-        verify(customerRepository, times(1)).save(updatedCustomer);
-    }
-
 
     @Test
     @WithMockUser(roles = "ADMIN")

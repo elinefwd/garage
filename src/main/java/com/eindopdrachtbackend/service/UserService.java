@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +31,11 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFound("User not found with id: " + id)); // Throw exception if not found
     }
 
+    public List<ApplicationUser> getAllUsers() {
+        return userRepository.findAll(); // or similar
+    }
+
+
     public Optional<ApplicationUser> findByUsername(String username) {
         return userRepository.findByUsername(username); // This relies on your UserRepository
     }
@@ -50,5 +56,8 @@ public class UserService {
             throw new UserNotFound("User not found with id: " + user.getUserId()); // Throw exception if not found
         }
         return userRepository.save(user); // Ensure you save the updated user
+    }
+
+    public void deleteById(Long id) {
     }
 }

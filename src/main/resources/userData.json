@@ -1,100 +1,934 @@
 {
   "info": {
-    "name": "User Management",
-    "_postman_id": "12345-67890-abcdef",
-    "description": "Collection of user management requests including registration and role verification.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "_postman_id": "4ca96dda-60bb-4fcd-85c2-fa7f72fe8b9a",
+    "name": "Garage",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "35337526"
   },
   "item": [
     {
-      "name": "Create Admin User",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "description": ""
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"username\": \"eline\", \"password\": \"wachtwoord1\", \"role\": \"ADMIN\"}"
+      "name": "login",
+      "item": [
+        {
+          "name": "login customer Jane",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"username\": \"jane_doe\",  // or any other user you created\n\"password\": \"wachtwoord3\"  // correct password for the chosen user\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:8080/api/users",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "api",
-            "users"
-          ]
+        {
+          "name": "login employee John",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"username\": \"john_doe\",  // or any other user you created\n\"password\": \"wachtwoord2\"  // correct password for the chosen user\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login admin Eline",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"username\": \"eline\",  // or any other user you created\n\"password\": \"wachtwoord1\"  // correct password for the chosen user\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login employee Joe",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"username\": \"joe\",  // or any other user you created\n\"password\": \"wachtwoord5\"  // correct password for the chosen user\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "Create Employee User",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "description": ""
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"username\": \"john_doe\", \"password\": \"wachtwoord2\", \"role\": \"EMPLOYEE\"}"
+      "name": "customers",
+      "item": [
+        {
+          "name": "add customer",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"name\": \"MaJane\",\n\"address\": \"SamRoad 5\",\n\"phoneNumber\": \"555-2244\",\n\"email\": \"majane@mail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/customers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "customers"
+              ]
+            }
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:8080/api/users",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "api",
-            "users"
-          ]
+        {
+          "name": "update customer info by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"customerId\": 1,\n    \"name\": \"Jane Doe\",\n    \"address\": \"123 Main St\",\n    \"phoneNumber\": \"555-9876\",\n    \"email\": \"jane.doe@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/customers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "customers",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see customer by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/customers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "customers",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete customer by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/customers/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "customers",
+                "6"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "Create Customer User",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "description": ""
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"username\": \"jane_doe\", \"password\": \"wachtwoord3\", \"role\": \"CUSTOMER\"}"
+      "name": "stock",
+      "item": [
+        {
+          "name": "add stock",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"partName\": \"WheelU\",\n\"quantity\": 10,\n\"price\": 249.99\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/stock",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "stock"
+              ]
+            }
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:8080/api/users",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "api",
-            "users"
-          ]
+        {
+          "name": "update stock by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"partName\": \"FrameB\",\n\"quantity\": 78,\n\"price\": 99.99\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/stock/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "stock",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see all stock",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc2MzkyMjM5OSwiZXhwIjoxNzY0Nzg2Mzk5fQ.Aqn0StkhLNUGMujNIf5vL0I5Yn50NUnKLVP6T6LRIcA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/stock",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "stock"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see stock by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/stock/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "stock",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/stock/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "stock",
+                "5"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
+    },
+    {
+      "name": "vehicles",
+      "item": [
+        {
+          "name": "add vehicles",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"customer\": {\n\"customerId\": 1  // Link to the existing customer\n},\n\"licensePlate\": \"XYZ-1234\",\n\"model\": \"Toyota Camry\",\n\"year\": 2020,\n\"uploadedDocuments\": \"documents/path/to/document.pdf\"  // Optional field\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/vehicles",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update vehicle info by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "     {\n\"customer\": {\n\"customerId\": 1  // Link to the existing customer\n},\n\"licensePlate\": \"XYZ-4321\",\n\"model\": \"Toyota Camry\",\n\"year\": 2020,\n\"uploadedDocuments\": \"documents/path/to/document.pdf\"  // Optional field\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/vehicles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "vehicles",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see all vehicles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/vehicles",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see vehicle by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/vehicles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "vehicles",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete vehicle by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/vehicles/15",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "vehicles",
+                "15"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "inspections",
+      "item": [
+        {
+          "name": "add inspection",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"vehicle\": {\n\"vehicleID\":5\n},\n\"action\": \"Full Inspection\",\n\"date\": \"2025-02-05\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/inspections",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inspections"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see all inspections",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/inspections",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inspections"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see inspection by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/inspections/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inspections",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update inspection by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\"vehicle\": {\n\"vehicleID\": 5\n},\n\"action\": \"Full Inspection, Replacement Wheel, Replacement Wipers\",\n\"date\": \"2025-02-05\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/inspections/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inspections",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"john.doe@example.com\"}"
+            },
+            "url": {
+              "raw": "localhost/users/1",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see user by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost/users/1",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "see user by username",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/username/eline",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "username",
+                "eline"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"johndoe\", \"password\": \"SecurePassword123!\", \"role\": \"USER\"}"
+            },
+            "url": {
+              "raw": "localhost/users",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "upload",
+      "item": [
+        {
+          "name": "upload papers by customerId",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGluZSIsImlhdCI6MTc0NDcwMTQ1NywiZXhwIjoxNzQ1NTY1NDU3fQ.gCOBVZjnLdM5vfx9QTHu8dlPTt9Hrbe1u5YqN1RGeJ8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "postman-cloud:///1f01ef54-fedf-4120-a4f8-2438c7d822bc"
+                },
+                {
+                  "key": "customerId",
+                  "value": "2",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/upload",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "upload"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }

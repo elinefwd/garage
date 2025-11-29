@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Invalidinput.class)
-    public ResponseEntity<String> handleInvalidInputException(Invalidinput ex) {
+    @ExceptionHandler(InvalidInput.class)
+    public ResponseEntity<String> handleInvalidInputException(InvalidInput ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 

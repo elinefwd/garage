@@ -1,16 +1,18 @@
 package com.eindopdrachtbackend.controller;
 
+import com.eindopdrachtbackend.dto.InspectionDto;
 import com.eindopdrachtbackend.model.Inspection;
 import com.eindopdrachtbackend.model.Vehicle;
-import com.eindopdrachtbackend.service.CustomerService;
 import com.eindopdrachtbackend.service.InspectionService;
 import com.eindopdrachtbackend.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/inspections")
@@ -22,98 +24,69 @@ public class InspectionController {
     @Autowired
     private VehicleService vehicleService;
 
-    @Autowired
-    private CustomerService customerService;
-
     @GetMapping
-    public ResponseEntity<List<Inspection>> getAllInspections() {
-        List<Inspection> inspections = inspectionService.getAllInspections(); // Get all inspections
-        System.out.println("Retrieved inspections: " + inspections); // Log the retrieved inspections
-        return ResponseEntity.ok(inspections); // Return the list of inspections with a 200 OK status
+    public ResponseEntity<Map<String, Object>> getAllInspections() {
+        List<Inspection> inspections = inspectionService.getAllInspections();
+        return ResponseEntity.ok(Map.of(
+                "message", "All inspections retrieved",
+                "data", inspections
+        ));
     }
 
-
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> deleteInspection(@PathVariable Long id) {
+        if (inspectionService.findById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Inspection not found for id " + id));
+        }
+        inspectionService.deleteById(id);
+        return ResponseEntity.ok(Map.of("message", "Inspection deleted"));
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Inspection> getInspectionById(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> getInspectionById(@PathVariable Long id) {
         Inspection inspection = inspectionService.findById(id);
         if (inspection != null) {
-            return ResponseEntity.ok(inspection); // Return the found inspection
+            return ResponseEntity.ok(Map.of(
+                    "message", "Inspection found",
+                    "data", inspection
+            ));
         } else {
-            return ResponseEntity.notFound().build(); // Return 404 Not Found if not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Inspection not found for id " + id));
         }
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @PostMapping
-    public Inspection registerInspection(@RequestBody Inspection inspection) {
-        if (inspection.getVehicle() != null) {
-            System.out.println("Looking for Vehicle ID: " + inspection.getVehicle().getVehicleID());
-            Vehicle vehicle = vehicleService.findById(inspection.getVehicle().getVehicleID());
-            if (vehicle == null) {
-                throw new RuntimeException("Vehicle not found");
-            }
-            inspection.setVehicle(vehicle);
-        } else {
-            throw new RuntimeException("Vehicle information is required");
+    public ResponseEntity<Map<String, Object>> registerInspection(@RequestBody InspectionDto inspectionDto) {
+        if (inspectionDto.getVehicleId() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Vehicle ID is required"));
+        }
+        Vehicle vehicle = vehicleService.findById(inspectionDto.getVehicleId());
+        if (vehicle == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Vehicle not found"));
         }
 
-        // Calculate initial cost based on actions entered
-        double totalCost = calculateCost(inspection.getAction());
-        inspection.setCost(totalCost); // Set the calculated cost
-        return inspectionService.registerInspection(inspection);
-    }
+        // Maak een nieuwe entity van de DTO
+        Inspection inspection = new Inspection();
+        inspection.setVehicle(vehicle);
+        inspection.setAction(inspectionDto.getAction());
+        inspection.setDate(inspectionDto.getDate());
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
-    @PutMapping("/{id}")
-    public ResponseEntity<Inspection> updateInspection(@PathVariable Long id, @RequestBody Inspection inspection) {
-        Inspection existingInspection = inspectionService.findById(id);
-        if (existingInspection == null) {
-            return ResponseEntity.notFound().build();
-        }
+        double totalCost = inspectionService.calculateCost(inspectionDto.getAction());
 
-        // Update fields
-        existingInspection.setAction(inspection.getAction());
-        existingInspection.setDate(inspection.getDate());
+        // Sla de inspectie op
+        Inspection saved = inspectionService.registerInspection(inspection);
 
-        // Calculate cost based on the updated actions
-        existingInspection.setCost(calculateCost(inspection.getAction())); // Update the cost based on new actions
-
-        Inspection updatedInspection = inspectionService.registerInspection(existingInspection);
-        return ResponseEntity.ok(updatedInspection);
-    }
-
-    private double calculateCost(String actions) {
-        double totalCost = 0.0;
-
-        // Split the actions by comma or other delimiters
-        String[] actionList = actions.split(",");
-
-        for (String action : actionList) {
-            switch (action.trim()) { // Trim whitespace from the action
-                case "Basic Check":
-                    totalCost += 50.00; // Cost for Basic Check
-                    break;
-                case "Full Inspection":
-                    totalCost += 150.00; // Cost for Full Inspection
-                    break;
-                case "Replacement Mirror":
-                    totalCost += 75.00; // Cost for Mirror Replacement
-                    break;
-                case "Replacement Wheel":
-                    totalCost += 120.00; // Cost for Wheel Replacement
-                    break;
-                case "Replacement Wipers":
-                    totalCost += 30.00; // Cost for Wiper Replacement
-                    break;
-                default:
-                    // Handle unknown actions if necessary or ignore
-                    break;
-            }
-        }
-
-        return totalCost; // Return the total calculated cost
+        // Geef reactie met bericht en data
+        return ResponseEntity.ok(Map.of(
+                "message", "Inspection registered successfully",
+                "data", saved
+        ));
     }
 
 }
-

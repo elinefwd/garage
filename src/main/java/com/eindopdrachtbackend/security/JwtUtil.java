@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class JwtUtil {
 
     // Use a secure key of at least 256 bits (ensure it's a proper base64-encoded key)
-    private final static String SECRET_KEY = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    private final static String SECRET_KEY = "T4CCr5M19k8pGzq9nXwLq7vK2WvHmQ1Zk9r8N7fG4b2A4xqV6";
 
     // Method to get the signing key
     private Key getSigningKey() {

@@ -12,6 +12,7 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Unique ID for the stock item
     private String partName; // Name of the part (or item in stock)
+
     private int quantity; // Number of items in stock
     private double price; // Price per item
 

@@ -29,7 +29,6 @@ class StockServiceTest {
 
     @Test
     void testCreateStock_AdminRole() {
-        // Mocking ADMIN role
         Stock stock = new Stock();
         stock.setPartName("Transmission");
         stock.setQuantity(10);
@@ -37,67 +36,53 @@ class StockServiceTest {
 
         when(stockRepository.save(any(Stock.class))).thenReturn(stock);
 
-        // Act
         Stock createdStock = stockService.createStock(stock);
 
-        // Assert
         assertNotNull(createdStock);
         assertEquals("Transmission", createdStock.getPartName());
         assertEquals(10, createdStock.getQuantity());
         assertEquals(199.99, createdStock.getPrice(), 0.01);
+
         verify(stockRepository, times(1)).save(stock);
     }
 
-    // You can add similar methods for other operations (Get, Update, Delete)
-    // that check user role context when invoking the respective service methods.
-
     @Test
     void testGetAllStock_ForAdminRole() {
-        // Arrange
         Stock stock1 = new Stock();
-        Stock stock2 = new Stock();
         stock1.setPartName("Transmission");
+        Stock stock2 = new Stock();
         stock2.setPartName("Engine");
 
         when(stockRepository.findAll()).thenReturn(List.of(stock1, stock2));
 
-        // Act
         List<Stock> stockList = stockService.getAllStock();
 
-        // Assert
         assertEquals(2, stockList.size());
         verify(stockRepository, times(1)).findAll();
     }
 
     @Test
     void testGetStockById_Exists_ForEmployeeRole() {
-        // Arrange
         Stock stock = new Stock();
         stock.setId(1L);
         stock.setPartName("Transmission");
 
         when(stockRepository.findById(1L)).thenReturn(Optional.of(stock));
 
-        // Act
-        Optional<Stock> foundStock = stockService.getStockById(1L);
+        Optional<Stock> found = stockService.getStockById(1L);
 
-        // Assert
-        assertTrue(foundStock.isPresent());
-        assertEquals("Transmission", foundStock.get().getPartName());
+        assertTrue(found.isPresent());
+        assertEquals("Transmission", found.get().getPartName());
         verify(stockRepository, times(1)).findById(1L);
     }
 
-    // Continue to add more tests for update and delete as needed.
-
     @Test
     void testDeleteStock() {
-        // Arrange
         Long stockId = 1L;
 
-        // Act
+        // Geen teruggaand object nodig, alleen verificatie
         stockService.deleteStock(stockId);
 
-        // Assert
         verify(stockRepository, times(1)).deleteById(stockId);
     }
 }

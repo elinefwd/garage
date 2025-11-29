@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty; // Import the JsonProperty
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+
 @Entity
+@Table(name = "vehicle") // let op kleine letters
 public class Vehicle {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("vehicleID") // Bind JSON field "vehicleID" to this field

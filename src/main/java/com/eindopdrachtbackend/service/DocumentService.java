@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DocumentService {
@@ -23,14 +24,30 @@ public class DocumentService {
 
     // Method to save an existing document (after linking it to a customer)
     public void saveDocument(Document document) {
-        documentRepository.save(document); // Save the document to the repository
+        documentRepository.save(document); // Save the document
     }
 
-    // Method to get all documents for a specific customer by their name
+    // Method to get all documents
+    public List<Document> getAllDocuments() {
+        return documentRepository.findAll();
+    }
+
+    // Method to find a document by ID
+    public Optional<Document> findById(Long id) {
+        return documentRepository.findById(id);
+    }
+
+    // Method to delete a document by ID
+    public void deleteById(Long id) {
+        if (documentRepository.existsById(id)) {
+            documentRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Document not found");
+        }
+    }
+
+    // Method to get documents for a specific customer by naam
     public List<Document> getDocumentsForCustomer(String name) {
-        return documentRepository.findByCustomer_Name(name); // Assuming this method is defined in DocumentRepository
+        return documentRepository.findByCustomer_Name(name);  // Zorg dat die methode bestaat in je repo
     }
-
-    // Other methods...
 }
-

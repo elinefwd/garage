@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/inspections/**").hasAnyRole("ADMIN", "EMPLOYEE") // ADMIN and EMPLOYEE access for inspection operations
                         .requestMatchers("/users/**").hasRole("ADMIN") // ADMIN can create, view, update, and delete users
 
+                        .requestMatchers("/upload/**").hasRole("ADMIN") // ADMIN can create, view, update, and delete documents and uploads
                         .requestMatchers(HttpMethod.POST, "/upload").hasRole("ADMIN") // ADMIN can upload documents
 
                         .requestMatchers(HttpMethod.GET, "/customers/me").hasRole("CUSTOMER") // Customers can access their own profile

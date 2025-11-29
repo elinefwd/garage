@@ -1,58 +1,93 @@
 package com.eindopdrachtbackend.controller;
 
-import com.eindopdrachtbackend.model.Document;
+import com.eindopdrachtbackend.dto.DocumentDto;
 import com.eindopdrachtbackend.model.Customer;
-import com.eindopdrachtbackend.service.DocumentService;
+import com.eindopdrachtbackend.model.Document;
 import com.eindopdrachtbackend.service.CustomerService;
+import com.eindopdrachtbackend.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/upload") // Base URL for upload-related APIs
+@RequestMapping("/upload")
 public class UploadController {
 
     @Autowired
     private DocumentService documentService;
 
     @Autowired
-    private CustomerService customerService; // Use of CustomerService to find customers
+    private CustomerService customerService;
 
-    @PreAuthorize("hasRole('ADMIN')") // Restrict access to ADMIN
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
-                                                   @RequestParam("customerId") Long customerId) {
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("File is empty.");
+    public ResponseEntity<Map<String, Object>> handleFileUpload(@ModelAttribute DocumentDto documentDto) {
+        if (documentDto.getFileContent() == null || documentDto.getFileContent().length == 0) {
+            return ResponseEntity.badRequest().body(Map.of("message", "File is empty."));
         }
 
         try {
-            // Get the file content as a byte array
-            byte[] fileContent = file.getBytes();
-            String filename = file.getOriginalFilename();
+            String filename = documentDto.getFilename();
+            byte[] fileContent = documentDto.getFileContent();
 
-            // Create and save the document
-            Document document = documentService.saveDocument(filename, fileContent); // Save document with filename and file content
+            Document document = documentService.saveDocument(filename, fileContent);
 
-            // Fetch the customer and associate the document with it
-            Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
+            Optional<Customer> optionalCustomer = customerService.getCustomerById(documentDto.getCustomerId());
             if (optionalCustomer.isPresent()) {
-                document.setCustomer(optionalCustomer.get()); // Link document to the customer
-                documentService.saveDocument(document); // Save again to keep the customer link
+                document.setCustomer(optionalCustomer.get());
+                documentService.saveDocument(document);
+                return ResponseEntity.ok(Map.of(
+                        "message", "File uploaded successfully",
+                        "filename", filename,
+                        "documentId", document.getId()
+                ));
             } else {
-                return ResponseEntity.badRequest().body("Customer not found.");
+                return ResponseEntity.badRequest().body(Map.of("message", "Customer not found."));
             }
-
-            return ResponseEntity.ok("File uploaded successfully: " + filename);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to upload file: " + e.getMessage());
+                    .body(Map.of("message", "Failed to upload file: " + e.getMessage()));
+        }
+    }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/documents")
+    public ResponseEntity<Map<String, Object>> getAllDocuments() {
+        List<Document> docs = documentService.getAllDocuments();
+        return ResponseEntity.ok(Map.of("message", "All documents retrieved", "data", docs));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/documents/{id}")
+    public ResponseEntity<Map<String, Object>> getDocumentById(@PathVariable Long id) {
+        Optional<Document> docOpt = documentService.findById(id);
+        if (docOpt.isPresent()) {
+            return ResponseEntity.ok(Map.of(
+                    "message", "Document found",
+                    "data", docOpt.get()
+            ));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Document not found for id " + id));
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/documents/{id}")
+    public ResponseEntity<Map<String, String>> deleteDocument(@PathVariable Long id) {
+        try {
+            documentService.deleteById(id);
+            return ResponseEntity.ok(Map.of("message", "Document deleted"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Document not found"));
         }
     }
 }
